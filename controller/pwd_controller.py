@@ -1,6 +1,4 @@
-from Crypto.Cipher import AES
 from flask import Blueprint as Controller, request, g
-import jwt
 from constants import base_db
 from model import PwdModel
 from common import Result
@@ -11,7 +9,7 @@ pwd_controller = Controller("pwd", __name__, url_prefix='/pwd')
 
 @pwd_controller.route("/list", methods=["GET"])
 def list():
-    email = g.info.email
+    email = g.info['email']
     db_pwds = base_db.session.query(PwdModel).filter(
         PwdModel.email == email).all()
     return Result.ok(data=[item.json() for item in db_pwds])

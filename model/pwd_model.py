@@ -13,6 +13,7 @@ class PwdModel(BaseModel):
     password = Column(String(500), comment="密码")
 
     def json(self):
+        print()
         return {
             "id": self.id,
             "email": self.email,
@@ -20,4 +21,5 @@ class PwdModel(BaseModel):
             "platform": self.platform,
             "account": self.account,
             "password": self.password,
+            "create_time": self.create_time.strftime("%Y-%m-%d"),
         }

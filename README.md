@@ -16,6 +16,7 @@ pymysql
 pycryptodome
 bcrypt
 PyJWT
+cryptography
 ```
 
 ### 系统需求
