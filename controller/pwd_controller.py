@@ -11,7 +11,7 @@ pwd_controller = Controller("pwd", __name__, url_prefix='/pwd')
 def list():
     email = g.info['email']
     db_pwds = base_db.session.query(PwdModel).filter(
-        PwdModel.email == email).all()
+        PwdModel.email == email).order_by(PwdModel.sort.asc()).all()
     return Result.ok(data=[item.json() for item in db_pwds])
 
 
@@ -78,5 +78,16 @@ def delete():
     users_to_delete = PwdModel.query.filter(PwdModel.id.in_(ids)).all()
     for pwd in users_to_delete:
         base_db.session.delete(pwd)
+    base_db.session.commit()
+    return Result.ok()
+
+
+@pwd_controller.route("/sort", methods=["POST"])
+def sort():
+    ids = request.json
+    pwds = PwdModel.query.filter(PwdModel.id.in_(ids)).all()
+    sort_arr = [i for i in range(len(pwds))]
+    new_pwds = [{'id': ids[i], 'sort': sort_arr[i]} for i in range(len(pwds))]
+    base_db.session.bulk_update_mappings(PwdModel, new_pwds)
     base_db.session.commit()
     return Result.ok()
