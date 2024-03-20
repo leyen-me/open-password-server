@@ -6,6 +6,18 @@
 密码管理器，AES对称加密
 ```
 
+### 项目依赖
+
+```
+flask
+Flask-Cors
+flask-sqlalchemy
+pymysql
+pycryptodome
+bcrypt
+PyJWT
+```
+
 ### 系统需求
 
 ```
@@ -39,3 +51,4 @@ python main.py
 ```
 pip freeze > requirements.txt
 ```
+
